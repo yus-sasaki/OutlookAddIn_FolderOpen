@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+  <contextMenus>
+    <contextMenu idMso="ContextMenuReadOnlyMailText">
+      <button id="ReadOnlyContext"
+              label="フォルダを開く（範囲選択）(&amp;D)"
+              onAction="SelectedPath"/>
+      <button id="ReadOnlyFileContext"
+              label="ファイルを開く（範囲選択）(&amp;F)"
+              onAction="SelectedFileOpen"/>
+    </contextMenu>
+    <contextMenu idMso="ContextMenuText">
+        <button id="EditContext"
+              label="フォルダを開く（範囲選択）(&amp;D)"
+              onAction="SelectedPath"/>
+      <button id="EditFileContext"
+              label="ファイルを開く（範囲選択）(&amp;F)"
+              onAction="SelectedFileOpen"/>
+    </contextMenu>
+    <contextMenu idMso="ContextMenuReadOnlyMailHyperlink">
+      <button id="HyperLinkContext"
+              label="フォルダを開く（ハイパーリンク）(&amp;H)"
+              onAction="SelectedHyperLinkPath"/>
+      <button id="ReadOnlyHyperLinkSelectedContext"
+              label="フォルダを開く（範囲選択）(&amp;D)"
+              onAction="SelectedPath"/>
+      <button id="ReadOnlyHyperLinkFileContext"
+              label="ファイルを開く（範囲選択）(&amp;F)"
+              onAction="SelectedFileOpen"/>
+    </contextMenu>
+    <contextMenu idMso="ContextMenuHyperlink">
+      <button id="EditHyperLinkContext"
+              label="フォルダを開く（ハイパーリンク）(&amp;H)"
+              onAction="SelectedHyperLinkPath"/>
+      <button id="EditHyperLinkSelectedContext"
+              label="フォルダを開く（範囲選択）(&amp;D)"
+              onAction="SelectedPath"/>
+      <button id="EditHyperLinkFileContext"
+              label="ファイルを開く（範囲選択）(&amp;F)"
+              onAction="SelectedFileOpen"/>
+    </contextMenu>
+  </contextMenus>
+</customUI>
+

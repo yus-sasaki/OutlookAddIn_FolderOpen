@@ -1,11 +1,11 @@
-# 右クリックメニューでファイルパスからフォルダを開くアドイン　マニュアル
+# 右クリックメニューでファイルパスからフォルダを開くアドイン説明
 
 ## 目次
 
-* 概要
-* 動作仕様
-* インストール方法
-* 使用方法
+* [概要](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen/blob/main/README.md#%E6%A6%82%E8%A6%81)
+* [動作仕様](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen#%E5%8B%95%E4%BD%9C%E4%BB%95%E6%A7%98)
+* [インストール方法](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95)
+* [使用方法](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen#%E5%8B%95%E4%BD%9C%E4%BB%95%E6%A7%98)
 
 
 ## 概要

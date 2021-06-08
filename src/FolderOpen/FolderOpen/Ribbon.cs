@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FolderOpen.Properties;
+using System;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Office = Microsoft.Office.Core;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Word = Microsoft.Office.Interop.Word;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 // TODO:  リボン (XML) アイテムを有効にするには、次の手順に従います。
 
@@ -35,7 +34,7 @@ namespace FolderOpen
     [ComVisible(true)]
     public class Ribbon : Office.IRibbonExtensibility
     {
-        private Office.IRibbonUI ribbon;
+        private Office.IRibbonUI m_ribbon;
 
         public Ribbon()
         {
@@ -43,7 +42,7 @@ namespace FolderOpen
 
         #region IRibbonExtensibility のメンバー
 
-        public string GetCustomUI(string ribbonID)
+        public string GetCustomUI(string ribbonId)
         {
             return GetResourceText("FolderOpen.Ribbon.xml");
         }
@@ -55,7 +54,7 @@ namespace FolderOpen
 
         public void Ribbon_Load(Office.IRibbonUI ribbonUI)
         {
-            this.ribbon = ribbonUI;
+            m_ribbon = ribbonUI;
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace FolderOpen
         /// <param name="control"></param>
         public void SelectedFileOpen(Office.IRibbonControl control)
         {
-            var selStr = GetSelectedText();
+            string selStr = GetSelectedText();
             if (selStr != "")
             {
                 selStr = PathMake(selStr);
@@ -106,13 +105,13 @@ namespace FolderOpen
 
         private static string GetResourceText(string resourceName)
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            string[] resourceNames = asm.GetManifestResourceNames();
-            for (int i = 0; i < resourceNames.Length; ++i)
+            var asm = Assembly.GetExecutingAssembly();
+            var resourceNames = asm.GetManifestResourceNames();
+            foreach (var t in resourceNames)
             {
-                if (string.Compare(resourceName, resourceNames[i], StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Compare(resourceName, t, StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    using (StreamReader resourceReader = new StreamReader(asm.GetManifestResourceStream(resourceNames[i])))
+                    using (var resourceReader = new StreamReader(asm.GetManifestResourceStream(t)))
                     {
                         if (resourceReader != null)
                         {
@@ -126,7 +125,7 @@ namespace FolderOpen
 
         #endregion
 
-        #region 公開サービス
+        #region サービス
 
         /// <summary>
         /// テキストを取得します
@@ -231,7 +230,7 @@ namespace FolderOpen
             }
             else
             {
-                MessageBox.Show("フォルダパスが正しく選択されていない、もしくはフォルダが存在しません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Ribbon_OpenFolderFromSelected, Resources.Ribbon_Message_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -253,7 +252,7 @@ namespace FolderOpen
                 }
                 else
                 {
-                    MessageBox.Show("ファイルパスが正しく選択されていない、もしくはファイルが存在しません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Resources.Ribbon_OpenFileFromSelected, Resources.Ribbon_Message_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -268,14 +267,13 @@ namespace FolderOpen
         {
 
             // フォルダ名に使用できない文字群の定義（/\:は区切りに使用するため除外）
-            selStr = System.Text.RegularExpressions.Regex.Replace(selStr, @"[*?|<>\r\n\0\t\b\f\v]", string.Empty);
-            selStr = System.Text.RegularExpressions.Regex.Replace(selStr, "\"", string.Empty);
+            selStr = Regex.Replace(selStr, @"[*?|<>\r\n\0\t\b\f\v]", string.Empty);
+            selStr = Regex.Replace(selStr, "\"", string.Empty);
 
             // 先頭にスペースおよび＜＞が存在すればパスに関係ないとして削除します
-            int iCnt;
-            for (iCnt = 0; iCnt < selStr.Length - 1; iCnt++)
+            for (var cnt = 0; cnt < selStr.Length - 1; cnt++)
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(selStr.Substring(0, 1), @"[\s＜＞]"))
+                if (Regex.IsMatch(selStr.Substring(0, 1), @"[\s＜＞]"))
                 {
                     selStr = selStr.Remove(0, 1);
                 }
@@ -286,11 +284,11 @@ namespace FolderOpen
             }
 
             // 末尾にスペースおよび＜＞が存在すればパスに関係ないとして削除
-            for (iCnt = selStr.Length - 1; iCnt > 0; iCnt--)
+            for (var cnt = selStr.Length - 1; cnt > 0; cnt--)
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(selStr.Substring(iCnt, 1), @"[\s＜＞]"))
+                if (Regex.IsMatch(selStr.Substring(cnt, 1), @"[\s＜＞]"))
                 {
-                    selStr = selStr.Remove(iCnt, 1);
+                    selStr = selStr.Remove(cnt, 1);
                 }
                 else
                 {
@@ -298,57 +296,60 @@ namespace FolderOpen
                 }
             }
 
-            // \\～　Y:～　で開始していれば変更せず返します
+            // \\～  Y:～  で開始していれば変更せず返します
             string retStr;
-            if (System.Text.RegularExpressions.Regex.IsMatch(selStr, @"^\\\\|^[A-Z]:"))
+            if (Regex.IsMatch(selStr, @"^\\\\|^[A-Z]:"))
             {
                 retStr = selStr;
             }
             else
             {
+                #region file～形式の場合の加工
+
                 // fileから始まっていればfileを削除します
-                if (System.Text.RegularExpressions.Regex.IsMatch(selStr, "^(file:)"))
+                if (Regex.IsMatch(selStr, "^(file:)"))
                 {
                     selStr = selStr.Remove(0, 5);
                 }
 
                 // fileの後ろが//\\であれば//を削除します
-                if (System.Text.RegularExpressions.Regex.IsMatch(selStr, @"^(//\\\\)"))
+                if (Regex.IsMatch(selStr, @"^(//\\\\)"))
                 {
-                    selStr = System.Text.RegularExpressions.Regex.Replace(selStr, "^(//)", string.Empty);
+                    selStr = Regex.Replace(selStr, "^(//)", string.Empty);
                 }
                 // fileの後ろが\\//であれば//を削除します
-                else if (System.Text.RegularExpressions.Regex.IsMatch(selStr, @"^(\\\\//)"))
+                else if (Regex.IsMatch(selStr, @"^(\\\\//)"))
                 {
-                    selStr = System.Text.RegularExpressions.Regex.Replace(selStr, @"^(\\\\//)", "\\\\");
+                    selStr = Regex.Replace(selStr, @"^(\\\\//)", "\\\\");
                 }
                 // fileの後ろが\\Y:等であれば\\を削除します
-                else if (System.Text.RegularExpressions.Regex.IsMatch(selStr, @"^(\\\\[A-Z]:)"))
+                else if (Regex.IsMatch(selStr, @"^(\\\\[A-Z]:)"))
                 {
-                    selStr = System.Text.RegularExpressions.Regex.Replace(selStr, @"^\\\\", string.Empty);
+                    selStr = Regex.Replace(selStr, @"^\\\\", string.Empty);
                 }
                 // fileの後ろが//Y:等であれば//を削除します
-                else if (System.Text.RegularExpressions.Regex.IsMatch(selStr, @"^(//[A-Z]:)"))
+                else if (Regex.IsMatch(selStr, @"^(//[A-Z]:)"))
                 {
-                    selStr = System.Text.RegularExpressions.Regex.Replace(selStr, @"^//", string.Empty);
+                    selStr = Regex.Replace(selStr, @"^//", string.Empty);
                 }
-                // fileの後ろが//であれば削除します
-                else if (System.Text.RegularExpressions.Regex.IsMatch(selStr, "^(//)"))
+                // fileの後ろが//であれば//を削除します
+                else if (Regex.IsMatch(selStr, "^(//)"))
                 {
                     //selStr = System.Text.RegularExpressions.Regex.Replace(selStr, "^(//)", "\\\\");
-                    selStr = System.Text.RegularExpressions.Regex.Replace(selStr, "^(//)", string.Empty);
+                    selStr = Regex.Replace(selStr, "^(//)", string.Empty);
                 }
 
+                #endregion
+
                 // 上記の加工後、Y:等で始まっていればそのまま返します
-                if (System.Text.RegularExpressions.Regex.IsMatch(selStr, "^[A-Z]:"))
+                if (Regex.IsMatch(selStr, "^[A-Z]:"))
                 {
                     retStr = selStr;
                 }
                 // 上記の加工後、先頭に\\がなく、dcinc～のようであれば\\を先頭に追加します
-                else if (System.Text.RegularExpressions.Regex.IsMatch(selStr, @"^[^(\\\\)]"))
+                else if (Regex.IsMatch(selStr, @"^[^(\\\\)]"))
                 {
-                    selStr = @"\\" + selStr;
-                    retStr = selStr;
+                    retStr = @"\\" + selStr;
                 }
                 // 先頭に\\がついていればそのまま返します
                 else
@@ -358,12 +359,24 @@ namespace FolderOpen
             }
 
             // /を\に置換します
-            if (System.Text.RegularExpressions.Regex.IsMatch(selStr, "/"))
+            if (Regex.IsMatch(selStr, "/"))
             {
-                selStr = System.Text.RegularExpressions.Regex.Replace(selStr, "/", "\\");
-                retStr = selStr;
+                retStr = Regex.Replace(selStr, "/", "\\");
             }
 
+            #region 特別な事情のためパスを読み替えたい場合
+
+            // *********************************************************************
+            // 下記コードは特別な事情のためパスを読み替えたい場合に編集してください
+            // *********************************************************************
+
+            // 先頭の10.71.75.125をhelmes-2に読み替えてPathを利用したいというケースに対応
+            if (Regex.IsMatch(selStr, @"^(\\\\10.71.75.125)"))
+            {
+                retStr = Regex.Replace(selStr, @"^(\\\\10.71.75.125)", "\\\\helmes-2");
+            }
+
+            #endregion
 
             return retStr;
         }
@@ -375,8 +388,7 @@ namespace FolderOpen
         /// <returns></returns>
         private string SpaceDelete(string selStr)
         {
-            var retStr = System.Text.RegularExpressions.Regex.Replace(selStr, @"\s", string.Empty);
-            return retStr;
+            return Regex.Replace(selStr, @"\s", string.Empty);
         }
 
         #endregion

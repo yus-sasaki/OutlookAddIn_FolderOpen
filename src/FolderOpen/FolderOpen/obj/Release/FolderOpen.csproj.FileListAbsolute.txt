@@ -1,0 +1,12 @@
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Release\FolderOpen.dll
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Release\FolderOpen.pdb
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Release\FolderOpen.dll.manifest
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Release\FolderOpen.vsto
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Release\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Release\FolderOpen.Properties.Resources.resources
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Release\FolderOpen.csproj.GenerateResource.cache
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Release\FolderOpen.csproj.CoreCompileInputs.cache
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Release\FolderOpen.csproj.CopyComplete
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Release\FolderOpen.dll
+C:\Git\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Release\FolderOpen.pdb

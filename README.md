@@ -5,13 +5,12 @@
 * [概要](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen/blob/main/README.md#%E6%A6%82%E8%A6%81)
 * [動作仕様](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen#%E5%8B%95%E4%BD%9C%E4%BB%95%E6%A7%98)
 * [インストール方法](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95)
-* [使用方法](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen#%E5%8B%95%E4%BD%9C%E4%BB%95%E6%A7%98)
+* [使用方法](https://github.com/yus-sasaki/OutlookAddIn_FolderOpen#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
 
 
 ## 概要
 　このアドインでは、Outlookのメール文章中に存在するファイルパスを右クリックメニューから、そのファイルが直下に格納されている親フォルダを開くことができます。  
 　また、ハイパーリンクが途中で切れてしまったフォルダおよびファイルを開きたいという要望を受けて、範囲選択したパスに対し、フォルダおよびファイルを開く機能を追加。
-* パスの先頭がIPアドレス：10.71.75.125であった場合、ファイル共有サーバ：helmes-2と単純に置き換えるバージョンを試作しました。私個人の環境ではアクセス権もないため十分なチェックができているか確認がとれず、インストーラーを通常バージョンと分けてあります。
 
 ## 動作仕様
 
@@ -34,6 +33,8 @@
 * 追加されたアドインをOutlookのオプションで削除した場合、本アドインをアンインストール後に再度インストールしていただく必要があります。
 
 ## 使用方法
+
+ ![image](https://user-images.githubusercontent.com/71699816/121168607-1baa7800-c88e-11eb-946d-9ad905856dd2.png)
 
 ### ハイパーリンクが設定されているパスに使用
 1．メール文章中のハイパーリンクが設定されたファイルパスおよびフォルダパスに対し、右クリックから右クリックメニューを開きます。

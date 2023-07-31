@@ -335,7 +335,6 @@ namespace FolderOpen
                 // fileの後ろが//であれば//を削除します
                 else if (Regex.IsMatch(selStr, "^(//)"))
                 {
-                    //selStr = System.Text.RegularExpressions.Regex.Replace(selStr, "^(//)", "\\\\");
                     selStr = Regex.Replace(selStr, "^(//)", string.Empty);
                 }
 
@@ -346,7 +345,7 @@ namespace FolderOpen
                 {
                     retStr = selStr;
                 }
-                // 上記の加工後、先頭に\\がなく、dcinc～のようであれば\\を先頭に追加します
+                // 上記の加工後、先頭に\\がなければ\\を先頭に追加します
                 else if (Regex.IsMatch(selStr, @"^[^(\\\\)]"))
                 {
                     retStr = @"\\" + selStr;
@@ -363,20 +362,6 @@ namespace FolderOpen
             {
                 retStr = Regex.Replace(selStr, "/", "\\");
             }
-
-            #region 特別な事情のためパスを読み替えたい場合
-
-            // *********************************************************************
-            // 下記コードは特別な事情のためパスを読み替えたい場合に編集してください
-            // *********************************************************************
-
-            // 先頭の10.71.75.125をhelmes-2に読み替えてPathを利用したいというケースに対応
-            if (Regex.IsMatch(selStr, @"^(\\\\10.71.75.125)"))
-            {
-                retStr = Regex.Replace(selStr, @"^(\\\\10.71.75.125)", "\\\\helmes-2");
-            }
-
-            #endregion
 
             return retStr;
         }

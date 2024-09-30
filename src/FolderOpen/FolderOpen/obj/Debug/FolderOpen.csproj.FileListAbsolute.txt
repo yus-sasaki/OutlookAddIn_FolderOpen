@@ -1,0 +1,13 @@
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Debug\FolderOpen.csproj.AssemblyReference.cache
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Debug\FolderOpen.Properties.Resources.resources
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Debug\FolderOpen.csproj.GenerateResource.cache
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Debug\FolderOpen.dll
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Debug\FolderOpen.pdb
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Debug\FolderOpen.dll.manifest
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Debug\FolderOpen.vsto
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Debug\FolderOpen.csproj.CoreCompileInputs.cache
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Debug\FolderOpen.csproj.Up2Date
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Debug\FolderOpen.dll
+V:\OutlookAddIn_FolderOpen\src\FolderOpen\FolderOpen\obj\Debug\FolderOpen.pdb
